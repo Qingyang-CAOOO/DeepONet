@@ -20,7 +20,7 @@
 - **it's simple and pedagogical**:
     1. **explicit solution**:
 
-        this ODE:$\frac{ds(x)}{dx} = u(x), \quad s(0) = 0$ has a closed-form solution as: $s(x) = \int_0^x u(\tau)\, d\tau$.
+        this ODE:$\frac{ds(x)}{dx} = u(x), s(0) = 0$ has a closed-form solution as: $s(x) = \int_0^x u(\tau)\, d\tau$.
 
     2. **linear operator**:  
 
