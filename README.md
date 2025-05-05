@@ -2,44 +2,20 @@
 <h1 style="text-align: center; font-size: 1.5em;"> Problem 1.A (the antiderivative operator) </h1>
 
 ### 1. Operator Learning Formation
-- **differential equation**:
+- **differential equation**: $\frac{ds(x)}{dx} = g(s(x), u(x), x), \quad x \in (0, 1]$
 
-    $\frac{ds(x)}{dx} = g(s(x), u(x), x), \quad x \in (0, 1]$
+- **initial condition**: $s(0) = 0$
 
-- **initial condition**:
-
-    $$
-    s(0) = 0
-    $$
-
-- **target mapping**:
-
-    $$
-    u(x) \mapsto s(x), \quad \text{for all } x \in [0, 1]
-    $$
+- **target mapping**: $u(x) \mapsto s(x), \quad \text{for all } x \in [0, 1]$
 
 - **simplification**:
-    1. choosing:
-        $$
-        g(s(x), u(x), x) = u(x)
-        $$
+    1. choosing: $g(s(x), u(x), x) = u(x)$
 
-    2. the equation became:
-        $$
-        \frac{ds(x)}{dx} = u(x), \quad s(0) = 0
-        $$
+    2. the equation became: $\frac{ds(x)}{dx} = u(x), \quad s(0) = 0$
 
-        which is the definition of the antiderivative:  
+        which is the definition of the antiderivative:  $s(x) = \int_0^x u(\tau)\, d\tau$
 
-        $$
-        s(x) = \int_0^x u(\tau)\, d\tau
-        $$
-
-    3. the **operator** $G$ to learn was defined as:
-
-        $$
-        G : u(x) \mapsto s(x) = \int_0^x u(\tau)\, d\tau
-        $$
+    3. the **operator** $G$ to learn was defined as: $G : u(x) \mapsto s(x) = \int_0^x u(\tau)\, d\tau$
 
 - **it's simple and pedagogical**:
     1. **explicit solution**:
@@ -64,11 +40,7 @@
 
 ### 2. DeepONet Architecture
 
-DeepONet is to be trained to approximate the target ground truth:
-
-$$
-s(x) = \int_0^x u(\tau)\, d\tau
-$$
+DeepONet is to be trained to approximate the target ground truth: $s(x) = \int_0^x u(\tau)\, d\tau$
 
 - **Branch Net**: takes values of $u(x)$ at sensor points $x_1, \ldots, x_m$
 - **Trunk Net**: takes an evaluation point $x$
