@@ -4,8 +4,8 @@
 ### 1. Operator Learning Formation
 - **differential equation**:
 
-    $$
-    \frac{ds(x)}{dx} = g(s(x), u(x), x), \quad x \in (0, 1]
+    $$\[\frac{ds(x)}{dx} = g(s(x), u(x), x), \quad x \in (0, 1]\]
+    
     $$
 
 - **initial condition**:
