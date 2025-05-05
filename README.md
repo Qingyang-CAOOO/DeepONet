@@ -11,7 +11,7 @@
 - **simplification**:
     1. choosing: $g(s(x), u(x), x) = u(x)$
 
-    2. the equation became: $\frac{ds(x)}{dx} = u(x), \quad s(0) = 0$
+    2. the equation became: $\frac{ds(x)}{dx} = u(x), s(0) = 0$
 
         which is the definition of the antiderivative:  $s(x) = \int_0^x u(\tau)\, d\tau$
 
