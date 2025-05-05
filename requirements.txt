@@ -1,0 +1,5 @@
+torch>=1.12
+numpy
+matplotlib
+tqdm              # progress bar
+scikit-learn      # extra evaluation/metrics
