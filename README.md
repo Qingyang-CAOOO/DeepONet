@@ -8,15 +8,9 @@
   3. target mapping: $u(x) \mapsto s(x), \forall x \in [0, 1]$
 
 - **Simplification & Reformulation**: 
-    1. choosing: $g(s(x), u(x), x) = u(x)$
-      
-      the equation became: $\frac{ds(x)}{dx} = u(x), s(0) = 0$
+    1. choosing: $g(s(x), u(x), x) = u(x)$, and the equation became: $\frac{ds(x)}{dx} = u(x), s(0) = 0$, which is the definition of the antiderivative:  $s(x) = \int_0^x u(\tau) d\tau$
 
-      which is the definition of the antiderivative:  $s(x) = \int_0^x u(\tau) d\tau$
-
-    3. the **operator** $G$ to learn: 
-      
-      $G : u(x) \mapsto s(x) = \int_0^x u(\tau) d\tau = s_0 + \int_0^x u(\tau) d\tau, \quad x \in [0, 1]$
+    3. the **operator** $G$ to learn: $G : u(x) \mapsto s(x) = \int_0^x u(\tau) d\tau = s_0 + \int_0^x u(\tau) d\tau, \quad x \in [0, 1]$
 
 
 - **Simple & Pedagogical**:
