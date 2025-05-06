@@ -10,12 +10,10 @@ import config
 from utils import set_seed
 import matplotlib.pyplot as plt
 
-# set seed and device
 set_seed()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
-# create dataset and dataloader
 dataset = AntiderivativeDataset(
     num_samples=2000,
     num_sensors=config.NUM_SENSORS,
@@ -23,7 +21,6 @@ dataset = AntiderivativeDataset(
 )
 dataloader = DataLoader(dataset, batch_size=config.BATCH_SIZE, shuffle=True)
 
-# define model variants
 model_variants = {
     "deeponet_unstacked": {
         "branch": BranchNet(config.NUM_SENSORS, config.LATENT_DIM, config.HIDDEN_DIM),
@@ -50,28 +47,35 @@ model_variants = {
     }
 }
 
-# store training losses for plotting
 training_losses = {}
+models = {}
+optimizers = {}
 
-# train all models
+# initialize all models and optimizers
 for name, cfg in model_variants.items():
-    print(f"\nTraining model: {name}")
     if "model" in cfg:
         model = cfg["model"]
     else:
         model = DeepONet(cfg["branch"], cfg["trunk"], use_output_bias=cfg["bias"])
     model = model.to(device)
-
     optimizer = torch.optim.Adam(model.parameters(), lr=config.LEARNING_RATE)
-    criterion = torch.nn.MSELoss()
-    losses = []
+    models[name] = model
+    optimizers[name] = optimizer
+    training_losses[name] = []
 
-    for epoch in range(config.NUM_EPOCHS):
-        total_loss = 0
-        for u, y, s_true in dataloader:
-            u, y, s_true = u.to(device), y.to(device), s_true.to(device)
+criterion = torch.nn.MSELoss()
+
+# training loop
+for epoch in range(config.NUM_EPOCHS):
+    losses_epoch = {name: 0.0 for name in models}
+    
+    for u, y, s_true in dataloader:
+        u, y, s_true = u.to(device), y.to(device), s_true.to(device)
+        
+        for name, model in models.items():
+            optimizer = optimizers[name]
             optimizer.zero_grad()
-
+            
             if name == "fcnn":
                 s_pred = model(u, y)
             else:
@@ -80,21 +84,25 @@ for name, cfg in model_variants.items():
             loss = criterion(s_pred, s_true)
             loss.backward()
             optimizer.step()
-            total_loss += loss.item() * u.size(0)
+            losses_epoch[name] += loss.item() * u.size(0)
 
-        avg_loss = total_loss / len(dataset)
-        losses.append(avg_loss)
+    for name in losses_epoch:
+        avg_loss = losses_epoch[name] / len(dataset)
+        training_losses[name].append(avg_loss)
 
-        if (epoch + 1) % 100 == 0 or epoch == 0:
-            print(f"Epoch {epoch+1}: Loss = {avg_loss:.6f}")
+    if (epoch + 1) % 100 == 0 or epoch == 0:
+        log = f"Epoch {epoch + 1}:"
+        for name in models:
+            log += f" {name.replace('_', ' ')} Loss = {training_losses[name][-1]:.6f} |"
+        print(log.rstrip("|"))
 
-    training_losses[name] = losses
+# save models and plot
+for name, model in models.items():
     torch.save(model.state_dict(), f"{name}.pt")
 
-# plot all training curves
 plt.figure(figsize=(10, 6))
-for name, loss_list in training_losses.items():
-    plt.plot(loss_list, label=name)
+for name, losses in training_losses.items():
+    plt.plot(losses, label=name)
 plt.yscale("log")
 plt.xlabel("Epoch")
 plt.ylabel("Training Loss (log scale)")
