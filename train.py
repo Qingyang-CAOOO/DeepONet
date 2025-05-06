@@ -100,7 +100,7 @@ for epoch in range(config.NUM_EPOCHS):
 for name, model in models.items():
     torch.save(model.state_dict(), f"{name}.pt")
 
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(16, 9))
 for name, losses in training_losses.items():
     plt.plot(losses, label=name)
 plt.yscale("log")
@@ -110,5 +110,5 @@ plt.title("Training Losses Across DeepONet Variants and FCNN")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig("all_training_loss_comparison.png")
+plt.savefig("all_training_loss_comparison.png", dpi=300)
 plt.show()
