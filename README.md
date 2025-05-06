@@ -13,14 +13,14 @@
 
     2. the equation became: $\frac{ds(x)}{dx} = u(x), s(0) = 0$
 
-        which is the definition of the antiderivative:  $s(x) = \int_0^x u(\tau)\, d\tau$
+        which is the definition of the antiderivative:  $s(x) = \int_0^x u(\tau) d\tau$
 
-    3. the **operator** $G$ to learn was defined as: $G : u(x) \mapsto s(x) = \int_0^x u(\tau)\, d\tau$
+    3. the **operator** $G$ to learn was defined as: $G : u(x) \mapsto s(x) = \int_0^x u(\tau) d\tau$
 
 - **it's simple and pedagogical**:
     1. **explicit solution**:
 
-        this ODE: $\frac{ds(x)}{dx} = u(x), \quad s(0) = 0$ has a closed-form solution as: $s(x) = \int_0^x u(\tau)\, d\tau$.
+        this ODE: $\frac{ds(x)}{dx} = u(x), \quad s(0) = 0$ has a closed-form solution as: $s(x) = \int_0^x u(\tau) d\tau$.
 
     2. **linear operator**:  
 
@@ -40,7 +40,7 @@
 
 ### 2. DeepONet Architecture
 
-DeepONet is to be trained to approximate the target ground truth: $s(x) = \int_0^x u(\tau)\, d\tau$
+DeepONet is to be trained to approximate the target ground truth: $s(x) = \int_0^x u(\tau) d\tau$
 
 - **Branch Net**: takes values of $u(x)$ at sensor points $x_1, \ldots, x_m$
 - **Trunk Net**: takes an evaluation point $x$
