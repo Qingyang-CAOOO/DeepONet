@@ -69,7 +69,7 @@ for name, config_tuple in model_variants.items():
         predictions[name] = pred
 
 # plot all predictions
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(16, 9))
 plt.plot(y_grid, s_true, label="True", linewidth=2, color='black')
 for name, pred in predictions.items():
     plt.plot(y_grid, pred, label=name.replace("_", " "), linestyle='--')
@@ -79,5 +79,5 @@ plt.title("Prediction Comparison on Test Function")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig("prediction_comparison_all_models.png")
+plt.savefig("prediction_comparison_all_models.png", dpi=300)
 plt.show()
