@@ -11,9 +11,10 @@ import config
 from utils import set_seed
 import matplotlib.pyplot as plt
 
-# Set reproducibility and device
+# Set seed for reproducibility and select device
 set_seed()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
 
 # Load dataset
 dataset = AntiderivativeDataset(
